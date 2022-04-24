@@ -1,0 +1,124 @@
+#script to control LEDs in an arduino
+#The arduino will then show the led for a random amount of whole integer seconds between 2-5
+#it will send this value back to the python code for it to display and store
+#Actually will be better if the number isdecided in pythont hen the arduino code has to obey by it
+
+#cd /Users/zakwatts/Coding/MImiZakLocal/2ndTerm/040222/TestPALED
+#source venv/bin/activate
+
+from threading import Timer
+import serial
+import time
+import numpy
+import sys
+
+#time delay in ms
+timeB = 1
+timeR = 5000
+timeG = 300
+
+endchoice = 'x'
+
+#Establish serial connection
+ser = serial.Serial('/dev/cu.usbmodem1201', baudrate=9600, timeout=2)
+
+def menu():
+    print("What colour LED would you like to turn on")
+
+    LEDchoice = input("""
+                        R: Red LED
+                        B: Blue LED
+                        G: Green LED
+                        Q: Quit
+
+                        Please enter your choice: """)
+                    
+    if LEDchoice=='R':
+        print("You have selected the red LED")
+
+        timechoice = input("""How long do you want the led to shine for (ms) """)
+
+        ser.write(b'R')
+        print("written byte")
+        
+        j = str(timechoice)
+        ser.write(j.encode())
+        print("written delay")
+        time.sleep(0.5)
+        print(ser.readline().decode('ascii'))
+        print("recieved ^^^")
+
+
+    elif LEDchoice=='B':
+        print("You have selected the blue LED")
+        ser.write(b'B')
+        time.sleep(0.5)
+        j = str(timeB)
+        ser.write(j.encode())
+
+    elif LEDchoice=='X':
+        print("You have selected to turn off blue LED")
+        ser.write(b'X')
+        time.sleep(0.5)
+        j = str(timeB)
+        ser.write(j.encode())
+
+
+    elif LEDchoice=='G':
+        print("You have selected the green LED")
+        ser.write(b'G')
+        time.sleep(0.5)
+        j = str(timeG)
+        ser.write(j.encode())
+    
+    elif LEDchoice=='Q':
+        sys.exit
+
+    else:
+        print("You must only select either A or B")
+        print("Please try again")
+        menu()
+
+    print("Would you like to select another colour?")
+
+    endchoice = input("Type 'Y' to return to the main menu or 'Q' to quit the program: ")
+
+    if endchoice == 'Y':
+        menu()
+    
+    elif endchoice == 'Q':
+        sys.exit
+
+
+#initialise the algo
+menu()
+    
+'''
+def endmenu():
+    print("Would you like to select another colour?")
+
+    endchoice = input("Type 'Y' to return to the main menu or 'Q' to quit the program")
+
+    if endchoice == 'Y':
+        menu()
+    
+    elif endchoice == 'Q':
+        sys.exit
+'''
+
+
+
+
+
+
+
+
+"""
+    j = str(driving_freq)
+        
+    serialport.write(j.encode())
+    time.sleep(0.5)
+
+    #listen to hear for a confirmation that the frequency has been sent
+    print(serialport.readline().decode('ascii'))
+"""

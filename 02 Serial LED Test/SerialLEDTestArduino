@@ -1,0 +1,47 @@
+const int B_ledPin = 8; // the pin that the LED is attached to
+const int R_ledPin = 9;
+const int G_ledPin = 10;
+
+int incomingByte;      // a variable to read incoming serial data into
+long randNumber
+
+void setup() {
+  // initialize serial communication:
+  Serial.begin(9600);
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // see if there's incoming serial data:
+  if (Serial.available() > 0) {
+    // read the oldest byte in the serial buffer:
+    incomingByte = Serial.read();
+
+
+    if (incomingByte == 'B') {
+        incomingByte2 = Serial.read();
+        timeon = incomingByte2.toFloat();
+        digitalWrite(B_ledPin, HIGH);
+        delay(timeon)
+        digitalWrite(B_ledPin, LOW);
+    }
+
+    if (incomingByte == 'R') {
+        incomingByte2 = Serial.read();
+        timeon = incomingByte2.toFloat();
+        digitalWrite(R_ledPin, HIGH);
+        delay(timeon)
+        digitalWrite(R_ledPin, LOW);
+    }
+
+    if (incomingByte == 'G') {
+        incomingByte2 = Serial.read();
+        timeon = incomingByte2.toFloat();
+        digitalWrite(G_ledPin, HIGH);
+        delay(timeon)
+        digitalWrite(G_ledPin, LOW);
+
+    }
+  }
+}
